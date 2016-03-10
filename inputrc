@@ -1,0 +1,2 @@
+# Ignore case during tab complete in bash
+set completion-ignore-case on
