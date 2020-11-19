@@ -16,7 +16,7 @@ sudo add-apt-repository \
 	stable"
 sudo apt-get update && sudo apt-get install -y \
 	docker-ce docker-ce-cli containerd.io
-sudo docker run hello-world
+sudo docker run --rm hello-world
 
 # Setup so that Docker can be run without sudo
 sudo usermod -aG docker `whoami`

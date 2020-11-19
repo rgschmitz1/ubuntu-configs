@@ -5,3 +5,5 @@ autocmd FileType sh set tabstop=4|set shiftwidth=4|set noexpandtab
 set paste
 " Highlight search
 set hlsearch
+" Show line and column number in statusbar
+set ruler
