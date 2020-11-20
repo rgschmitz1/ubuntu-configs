@@ -5,7 +5,7 @@ autocmd FileType sh set tabstop=4|set shiftwidth=4|set noexpandtab
 set paste
 " Highlight search
 set hlsearch
-" Status bar colors
+" status bar colors
 au InsertEnter * hi statusline guifg=black guibg=#d7afff ctermfg=black ctermbg=magenta
 au InsertLeave * hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
 hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
@@ -39,16 +39,9 @@ let g:currentmode={
 set laststatus=2
 set noshowmode
 set statusline=
-"set statusline+=%0*\ %n\                                 " Buffer number
 set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
+set statusline+=%2*\ col:\ %2v\                          " Colomn number
+set statusline+=%3*│                                     " Separator
+set statusline+=%1*\ ln:\ %2l\                           " Line number, percentage of document
+set statusline+=%3*│                                     " Separator
 set statusline+=%1*\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
-"set statusline+=%3*│                                     " Separator
-"set statusline+=%2*\ %Y\                                 " FileType
-set statusline+=%3*│                                     " Separator
-set statusline+=%2*\ %{''.(&fenc!=''?&fenc:&enc).''}     " Encoding
-set statusline+=\ (%{&ff})\                               " FileFormat (dos/unix..)
-set statusline+=%3*│                                     " Separator
-"set statusline+=%=                                       " Right Side
-set statusline+=%2*\ col:\ %2v\                         " Colomn number
-set statusline+=%3*│                                     " Separator
-set statusline+=%1*\ ln:\ %2l\ (%3p%%)\              " Line number, percentage of document
