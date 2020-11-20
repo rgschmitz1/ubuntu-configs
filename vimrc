@@ -6,9 +6,9 @@ set paste
 " Highlight search
 set hlsearch
 " status bar colors
-au InsertEnter * hi statusline guifg=black guibg=#d7afff ctermfg=black ctermbg=magenta
-au InsertLeave * hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
-hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
+au InsertEnter * hi statusline guifg=black guibg=magenta ctermfg=black ctermbg=magenta
+au InsertLeave * hi statusline guifg=black guibg=cyan ctermfg=black ctermbg=cyan
+hi statusline guifg=black guibg=cyan ctermfg=black ctermbg=cyan
 
 " Status line
 " default: set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
@@ -40,8 +40,10 @@ set laststatus=2
 set noshowmode
 set statusline=
 set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
-set statusline+=%2*\ col:\ %2v\                          " Colomn number
-set statusline+=%3*│                                     " Separator
-set statusline+=%1*\ ln:\ %2l\                           " Line number, percentage of document
-set statusline+=%3*│                                     " Separator
-set statusline+=%1*\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
+set statusline+=%1*\ col:\ %2v\                          " Colomn number
+set statusline+=│                                     " Separator
+set statusline+=\ ln:\ %2l\                           " Line number, percentage of document
+set statusline+=│                                     " Separator
+set statusline+=\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
+
+hi User1 ctermfg=black ctermbg=white guibg=white guifg=black
