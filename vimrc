@@ -41,9 +41,11 @@ set noshowmode
 set statusline=
 set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
 set statusline+=%1*\ col:\ %2v\                          " Colomn number
-set statusline+=│                                     " Separator
-set statusline+=\ ln:\ %2l\                           " Line number, percentage of document
-set statusline+=│                                     " Separator
-set statusline+=\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
+set statusline+=%2*│                                     " Separator
+set statusline+=%1*\ ln:\ %2l\                           " Line number, percentage of document
+set statusline+=%2*│                                     " Separator
+set statusline+=%1*\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
 
 hi User1 ctermfg=black ctermbg=white guibg=white guifg=black
+hi User2 ctermfg=black ctermbg=white guibg=white guifg=black
+filetype plugin indent on
