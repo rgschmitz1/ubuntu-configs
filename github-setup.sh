@@ -24,10 +24,20 @@ if [[ -n "$1" && $1 = 'get' ]]; then
 fi
 PASS-HELPER
 sudo mv /tmp/git-pass-helper $pass_helper
-sudo chmod 544 $pass_helper
-sudo chown $(whoami):$(whoami) $pass_helper
+sudo chmod 755 $pass_helper
 unset pass_helper
 grep -q GPG_TTY ~/.bashrc || echo 'export GPG_TTY=$(tty)' >> ~/.bashrc
-which pass > /dev/null || sudo apt install -y pass
+if [ ! which pass > /dev/null ]; then
+	sudo apt update && \
+	sudo apt install -y pass && \
+	gpg --full-generate-key && \
+	key=$(gpg --list-key | awk '/^pub/{getline;print}' | xargs)
+	if [ -z "$key" ]; then
+		echo "ERROR: gpg key is empty, check setup and try again."
+		exit 1
+	fi
+	pass init $key
+	unset key
+fi
 echo enter password on first line and username on second line
 pass insert -m dev/github
