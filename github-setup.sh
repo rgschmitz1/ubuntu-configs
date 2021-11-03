@@ -27,7 +27,7 @@ sudo mv /tmp/git-pass-helper $pass_helper
 sudo chmod 755 $pass_helper
 unset pass_helper
 grep -q GPG_TTY ~/.bashrc || echo 'export GPG_TTY=$(tty)' >> ~/.bashrc
-if [ ! which pass > /dev/null ]; then
+if ! which pass > /dev/null; then
 	sudo apt update && \
 	sudo apt install -y pass && \
 	gpg --full-generate-key && \
