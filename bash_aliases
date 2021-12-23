@@ -12,4 +12,3 @@ alias x='xdg-open'
 alias x11vnc='x11vnc -usepw -loop'
 # Docker
 alias d='sudo docker'
-alias dpass='pass docker-credential-helpers/docker-pass-initialized-check && docker login'

@@ -1,7 +1,22 @@
 #!/bin/sh
+
 # username and email
-git config --global user.name "Bob Schmitz III"
-git config --global user.email 14095796+rgschmitz1@users.noreply.github.com
+USERNAME='Bob Schmitz III'
+EMAIL='14095796+rgschmitz1@users.noreply.github.com'
+
+create_passphrase() {
+	unset passphrase
+	read -rsp "Enter a passphrase: " passphrase
+	echo
+	read -rsp "Re-enter passphrase: "
+	echo
+	if [ "$passphrase" != "$REPLY" ]; then
+		create_passphrase
+	fi
+}
+
+git config --global user.name $USERNAME
+git config --global user.email $EMAIL
 # preferred editor is vim
 git config --global core.editor vim
 # git command aliases
@@ -30,12 +45,14 @@ grep -q GPG_TTY ~/.bashrc || echo 'export GPG_TTY=$(tty)' >> ~/.bashrc
 if ! which pass > /dev/null; then
 	sudo apt update && \
 	sudo apt install -y pass && \
-	gpg --full-generate-key && \
-	key=$(gpg --list-key | awk '/^pub/{getline;print}' | xargs)
+	create_passphrase
+	gpg --batch --passphrase "$passphrase" --quick-gen-key "$USERNAME <$EMAIL>" rsa4096 default 0 && \
+	key=$(gpg --list-key "$USERNAME" 2> /dev/null | awk '/^pub/{getline;print}' | xargs)
 	if [ -z "$key" ]; then
 		echo "ERROR: gpg key is empty, check setup and try again."
 		exit 1
 	fi
+	gpg --batch --passphrase "$passphrase" --quick-add-key $key rsa4096 default 0
 	pass init $key
 	unset key
 fi
