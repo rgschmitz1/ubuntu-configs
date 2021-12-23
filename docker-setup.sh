@@ -19,7 +19,7 @@ sudo docker rmi hello-world:latest
 # Setup so that Docker can be run without sudo
 sudo usermod -aG docker `whoami`
 
-if [ ! which docker-compose > /dev/null ]; then
+if ! which docker-compose > /dev/null; then
 	sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
 	sudo chmod +x /usr/local/bin/docker-compose
 fi
