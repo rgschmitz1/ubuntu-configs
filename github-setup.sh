@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # username and email
 USERNAME='Bob Schmitz III'
