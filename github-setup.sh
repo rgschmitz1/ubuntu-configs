@@ -43,8 +43,8 @@ git_pass_helper() {
 	sudo chmod 755 $pass_helper
 }
 
-git config --global user.name $USERNAME
-git config --global user.email $EMAIL
+git config --global user.name "$USERNAME"
+git config --global user.email "$EMAIL"
 # preferred editor is vim
 git config --global core.editor vim
 # git command aliases
