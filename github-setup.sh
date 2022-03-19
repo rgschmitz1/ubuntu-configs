@@ -75,5 +75,9 @@ if ! gpg --list-key "$USERNAME" &> /dev/null; then
 else
 	key=$(eval $key)
 fi
+git config --global user.signingkey $key
+git config --global commit.gpgsign true
+git config --global gpg.program gpg
+
 # Create pass helper for git
 git_pass_helper
