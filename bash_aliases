@@ -11,4 +11,4 @@ alias x='xdg-open'
 # Start x11vnc
 alias x11vnc='x11vnc -usepw -loop'
 # Docker
-alias d='sudo docker'
+alias d='docker'
