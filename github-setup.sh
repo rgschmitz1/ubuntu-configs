@@ -15,6 +15,7 @@ create_passphrase() {
 	fi
 }
 
+# Create pass helper for git
 git_pass_helper() {
 	# Verify pass is installed
 	if ! which pass > /dev/null; then
@@ -43,41 +44,50 @@ git_pass_helper() {
 	sudo chmod 755 $pass_helper
 }
 
-git config --global user.name "$USERNAME"
-git config --global user.email "$EMAIL"
-# preferred editor is vim
-git config --global core.editor vim
-# git command aliases
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.ci commit
-git config --global alias.st status
-git config --global alias.di diff
-git config --global alias.pu pull
-git config --global alias.up 'fetch upstream'
+# Configure global defaults for git
+git_global_defaults() {
+	git config --global user.name "$USERNAME"
+	git config --global user.email "$EMAIL"
+	# preferred editor is vim
+	git config --global core.editor vim
+	# git command aliases
+	git config --global alias.co checkout
+	git config --global alias.br branch
+	git config --global alias.ci commit
+	git config --global alias.st status
+	git config --global alias.di diff
+	git config --global alias.pu pull
+	git config --global alias.up 'fetch upstream'
+	git config --global init.defaultBranch main
+}
 
-# GPG_TTY needs to be set or the passphrase prompt will not appear in terminal
-if ! grep -q GPG_TTY ~/.bashrc; then
-	echo 'export GPG_TTY=$(tty)' >> ~/.bashrc
-	export GPG_TTY=$(tty)
-fi
-# Verify we a gpg key has been initialized
-key='gpg --list-key "$USERNAME" 2> /dev/null | awk "/^pub/{getline;print}" | xargs'
-if ! gpg --list-key "$USERNAME" &> /dev/null; then
-	create_passphrase
-	gpg --batch --passphrase "$passphrase" --quick-gen-key "$USERNAME <$EMAIL>" rsa4096 default 0 && \
-	key=$(eval $key)
-	if [ -z "$key" ]; then
-		echo "ERROR: gpg key is empty, check setup and try again."
-		exit 1
+git_gpg_setup() {
+	# GPG_TTY needs to be set or the passphrase prompt will not appear in terminal
+	if ! grep -q GPG_TTY ~/.bashrc; then
+		echo 'export GPG_TTY=$(tty)' >> ~/.bashrc
+		export GPG_TTY=$(tty)
 	fi
-	gpg --batch --passphrase "$passphrase" --quick-add-key $key rsa4096 default 0
-else
-	key=$(eval $key)
-fi
-git config --global user.signingkey $key
-git config --global commit.gpgsign true
-git config --global gpg.program gpg
+	# Verify we a gpg key has been initialized
+	key='gpg --list-key "$USERNAME" 2> /dev/null | awk "/^pub/{getline;print}" | xargs'
+	if ! gpg --list-key "$USERNAME" &> /dev/null; then
+		create_passphrase
+		gpg --batch --passphrase "$passphrase" --quick-gen-key "$USERNAME <$EMAIL>" rsa4096 default 0 && \
+		key=$(eval $key)
+		if [ -z "$key" ]; then
+			echo "ERROR: gpg key is empty, check setup and try again."
+			exit 1
+		fi
+		gpg --batch --passphrase "$passphrase" --quick-add-key $key rsa4096 default 0
+	else
+		key=$(eval $key)
+	fi
+	git config --global user.signingkey $key
+	git config --global commit.gpgsign true
+	git config --global gpg.program gpg
+}
 
-# Create pass helper for git
+git_global_defaults
+
+git_gpg_setup
+
 git_pass_helper
