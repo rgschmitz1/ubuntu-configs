@@ -51,3 +51,4 @@ hi User1 ctermfg=black ctermbg=white guibg=white guifg=black
 hi User2 ctermfg=black ctermbg=white guibg=white guifg=black
 filetype plugin indent on
 set background=dark
+syntax on
