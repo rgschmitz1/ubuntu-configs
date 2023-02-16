@@ -28,5 +28,5 @@ sudo docker run --rm hello-world || exit $?
 sudo docker rmi hello-world:latest
 
 # Setup so that Docker can be run without sudo
-sudo usermod -aG docker `whoami`
+sudo usermod -aG docker $USER
 exit $?
