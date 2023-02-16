@@ -33,8 +33,9 @@ git_pass_helper() {
 	git config --global credential.helper $pass_helper
 	local temp=$(mktemp)
 	cat <<-'PASS-HELPER' > $temp
-	#!/bin/bash
-	if [[ -n "$1" && $1 = 'get' ]]; then
+	#!/bin/sh
+	if [ -n "$1" ] && [ $1 = 'get' ]
+	then
 		credentials=($(pass dev/github))
 		echo "username=${credentials[1]}"
 		echo "password=${credentials[0]}"

@@ -1,5 +1,4 @@
 #!/bin/bash
-cd $(dirname $0)
 if [ -z $1 ]; then
 	cat <<-HELP
 	usage: $(basename $0) [option]
